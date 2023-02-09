@@ -1,0 +1,22 @@
+name: Run Tests
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.3.0
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3.3.0
+        with:
+          node-version: 16.13.x
+          cache: yarn
+      - name: install dependencies
+        run: |
+          yarn cache clean
+          yarn install --network-concurrenty 1
+      - name: runing tests
+        run: yarn tests
